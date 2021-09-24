@@ -1,9 +1,8 @@
-# Chapter 4 - Quarkus Panache Reactive (Repository Pattern)
 This is an example using Quarkus Panache Reactive and the repository pattern.
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+This project uses Quarkus, the Supersonic Subatomic Java Framework. If you want to learn more about Quarkus, please visit its website: https://quarkus.io/.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+This project integrates with [Fruityvice](https://www.fruityvice.com/) for enriching returned data.
 
 ## Start up Database
 This application expects a PostgreSQL database running on localhost. When running `quarkus:dev` (dev mode), the database will be automatically bootstrapped through [Quarkus DevServices](https://quarkus.io/guides/datasource#devservices-configuration-free-databases). When running in `prod` mode (i.e. via `java -jar` or running the native image) you can use Docker to start the database:
