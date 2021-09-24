@@ -11,7 +11,6 @@ import org.acme.domain.Fruit;
 import org.acme.domain.FruitData;
 import org.acme.domain.FruitData.Nutritions;
 import org.acme.repository.FruitRepository;
-import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
@@ -25,7 +24,6 @@ class FruitServiceTests {
 	FruitRepository fruitRepository;
 
 	@InjectMock
-	@RestClient
 	FruityViceClient fruityViceClient;
 
 	@Inject
@@ -36,20 +34,10 @@ class FruitServiceTests {
 		Mockito.when(this.fruitRepository.listAll())
 			.thenReturn(Uni.createFrom().item(List.of(new Fruit(1L, "Apple", "Hearty Fruit"))));
 
+		FruitData fruitData = new FruitData("Malus", "Rosaceae", "Rosales", new Nutritions(11.4, 0.3, 0.4, 52.0, 10.3));
+
 		Mockito.when(this.fruityViceClient.getByName(Mockito.eq("Apple")))
-			.thenReturn(Uni.createFrom().item(
-				new FruitData(
-					"Malus",
-					"Rosaceae",
-					"Rosales",
-					new Nutritions(
-						11.4,
-						0.3,
-						0.4,
-						52.0,
-						10.3
-					)
-				)
+			.thenReturn(Uni.createFrom().item(fruitData
 			));
 
 		List<Fruit> fruits = this.fruitService.getAllFruits().await().atMost(Duration.ofSeconds(5));
@@ -59,6 +47,11 @@ class FruitServiceTests {
 			.hasSize(1)
 			.extracting(Fruit::getId, Fruit::getName, Fruit::getDescription)
 			.containsExactly(tuple(1L, "Apple", "Hearty Fruit"));
+
+		assertThat(fruits.get(0).getData())
+			.isNotNull()
+			.usingRecursiveComparison()
+			.isEqualTo(fruitData);
 
 		Mockito.verify(this.fruitRepository).listAll();
 		Mockito.verify(this.fruityViceClient).getByName(Mockito.eq("Apple"));
