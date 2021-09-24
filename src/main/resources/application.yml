@@ -1,0 +1,11 @@
+quarkus:
+  datasource:
+    username: fruits
+    password: fruits
+    devservices:
+      image-name: quay.io/edeandrea/postgres-13-fruits:latest
+  hibernate-orm:
+    database:
+      generation: none
+
+'fruity-vice/mp-rest/url': https://fruityvice.com
