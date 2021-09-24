@@ -8,7 +8,7 @@ This project integrates with [Fruityvice](https://www.fruityvice.com/) for enric
 This application expects a PostgreSQL database running on localhost. When running `quarkus:dev` (dev mode), the database will be automatically bootstrapped through [Quarkus DevServices](https://quarkus.io/guides/datasource#devservices-configuration-free-databases). When running in `prod` mode (i.e. via `java -jar` or running the native image) you can use Docker to start the database:
 
 ```shell
-docker run --ulimit memlock=-1:-1 -it --rm=true --memory-swappiness=0 --name chapter4 -p 5432:5432 quay.io/edeandrea/postgres-13-fruits:latest
+docker run -p 5432:5432 quay.io/edeandrea/postgres-13-fruits:latest
 ```
 
 ## Running the application in dev mode
